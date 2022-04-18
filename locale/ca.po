@@ -1,0 +1,15 @@
+#
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "field:sale.line,pending_moves:"
+msgid "Pending Moves"
+msgstr "Moviments pendents"
+
+msgctxt "field:sale.sale,pending_moves:"
+msgid "Pending Moves"
+msgstr "Moviments pendents"
+
+msgctxt "model:ir.model.button,string:sale_sale_cancel_pending_moves"
+msgid "Cancel Pending Moves"
+msgstr "Cancel·la els moviments pendents"

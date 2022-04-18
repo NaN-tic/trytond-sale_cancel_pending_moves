@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- The COPYRIGHT file at the top level of this repository contains the full
+     copyright notices and license terms. -->
+<data>
+    <xpath expr="/form/notebook/page[@name='shipments']" position="after">
+        <page string="Pending Moves" id="pending_moves">
+            <field name="pending_moves" colspan="4"
+                view_ids="sale.move_view_list_shipment"/>
+            <button name="cancel_pending_moves" icon="tryton-cancel"/>
+        </page>
+    </xpath>
+</data>
