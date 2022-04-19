@@ -45,14 +45,14 @@ class Sale(metaclass=PoolMeta):
 
             shipments = []
             for shipment in sale.shipments:
-                if not any([x.state != 'cancel' for x in shipment.moves]):
+                if not any([x.state != 'cancelled' for x in shipment.moves]):
                     shipments.append(shipment)
             if shipments:
                 ShipmentOut.cancel(shipments)
 
             shipments = []
             for shipment in sale.shipment_returns:
-                if not any([x.state != 'cancel' for x in shipment.moves]):
+                if not any([x.state != 'cancelled' for x in shipment.moves]):
                     shipments.append(shipment)
             if shipments:
                 ShipmentOutReturn.cancel(shipments)
@@ -79,7 +79,7 @@ class SaleLine(metaclass=PoolMeta):
             moves = []
             skip = set(line.moves_ignored + line.moves_recreated)
             for move in line.moves:
-                if move.state not in ('cancel', 'done') and move not in skip:
+                if move.state not in ('cancelled', 'done') and move not in skip:
                     moves.append(move.id)
             pending_moves[line.id] = moves
 
