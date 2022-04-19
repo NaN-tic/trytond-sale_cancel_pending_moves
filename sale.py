@@ -35,7 +35,7 @@ class Sale(metaclass=PoolMeta):
             pending_moves = sale.pending_moves
             StockMove.cancel(pending_moves)
 
-            with Transaction().set_context({'active_id': purchase.id}):
+            with Transaction().set_context({'active_id': sale.id}):
                 session_id, _, _ = HandleShipmentException.create()
                 handle_shipment_exception = HandleShipmentException(session_id)
                 handle_shipment_exception.ask.recreate_moves = []
@@ -44,14 +44,14 @@ class Sale(metaclass=PoolMeta):
                 HandleShipmentException.delete(session_id)
 
             shipments = []
-            for shipment in purchase.shipments:
+            for shipment in sale.shipments:
                 if not any([x.state != 'cancel' for x in shipment.moves]):
                     shipments.append(shipment)
             if shipments:
                 ShipmentOut.cancel(shipments)
 
             shipments = []
-            for shipment in purchase.shipment_returns:
+            for shipment in sale.shipment_returns:
                 if not any([x.state != 'cancel' for x in shipment.moves]):
                     shipments.append(shipment)
             if shipments:
@@ -59,9 +59,9 @@ class Sale(metaclass=PoolMeta):
 
     @classmethod
     def get_pending_moves(cls, sales, name=None):
-        result = {}
+        result = dict((s.id, []) for s in sales)
+
         for sale in sales:
-            result[sale.id] = []
             for line in sale.lines:
                 result[sale.id].extend([m.id for m in line.pending_moves])
         return result
