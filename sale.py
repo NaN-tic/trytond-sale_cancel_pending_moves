@@ -35,11 +35,10 @@ class Sale(metaclass=PoolMeta):
             pending_moves = sale.pending_moves
             StockMove.cancel(pending_moves)
 
-            with Transaction().set_context({'active_id': sale.id}):
+            with Transaction().set_context(active_model=cls.__name__,
+                    active_ids=[sale.id], active_id=sale.id):
                 session_id, _, _ = HandleShipmentException.create()
                 handle_shipment_exception = HandleShipmentException(session_id)
-                handle_shipment_exception.record = sale
-                handle_shipment_exception.model = cls
                 handle_shipment_exception.ask.recreate_moves = []
                 handle_shipment_exception.ask.domain_moves = pending_moves
                 handle_shipment_exception.transition_handle()
