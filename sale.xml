@@ -12,7 +12,7 @@
         <record model="ir.model.button" id="sale_sale_cancel_pending_moves">
             <field name="name">cancel_pending_moves</field>
             <field name="string">Cancel Pending Moves</field>
-            <field name="model" search="[('model', '=', 'sale.sale')]"/>
+            <field name="model">sale.sale</field>
         </record>
     </data>
 </tryton>
